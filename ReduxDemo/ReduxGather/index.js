@@ -7,11 +7,13 @@
 // 需要调用redux中的combineReducers 生成一个整体的Reducer
 import {combineReducers} from 'redux';
 //对应操作的
-import CustomListReducer from './custom/CustomListReducer'
+import CustomListReducer from './Reducers/CustomListReducer'
+import SecendChildReducer from "./Reducers/SecendChildReducer";
 
 
 const custom = combineReducers({
-    CustomList: CustomListReducer
+    CustomList: CustomListReducer,
+    SecendChild:SecendChildReducer
 })
 
 export default custom

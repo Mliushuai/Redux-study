@@ -21,17 +21,25 @@ export const changeCustomItemCompletionStatusAction = (customItemId) => {
  * @return {{type: string, text: *}}
  */
 let nextId = 1;
-export const  addCustomItemAction = (customItemText) => {
+export const  addCustomItemAction = (customItemText,customItemName) => {
+    console.log(customItemText)
+    console.log(customItemName)
     return {
         type: 'ADD_CUSTOM_ITEM_ACTION',
         text: customItemText,
-        id: nextId++
+        id: nextId++,
+        name:customItemName
     };
 };
+/**
+ * 删除的action
+ * @returns {{type: string, text: string, id: number}}
+ */
 export const deleteCustomItemAction =()=>{
     return{
         type:'DELETE_CUSTOM_ITEM_ACTION',
         text: '',
-        id:nextId--
+        id:nextId--,
+        name:''
     }
 }

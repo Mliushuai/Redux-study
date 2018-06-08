@@ -3,30 +3,36 @@
  */
 
 import React, {Component} from 'react';
-import {addCustomItemAction,deleteCustomItemAction} from '../../ReduxGather/custom/action';
+import {addCustomItemAction, deleteCustomItemAction} from '../../ReduxGather/Reducers/action';
 // 引入connect函数用来生成Redux组件
 import {connect} from 'react-redux';
 import custom from "../../ReduxGather/index";
+import SecendChild from './SecendChild'
 
-class CustomList extends Component{
-    constructor(props){
+class CustomList extends Component {
+    constructor(props) {
         super(props)
-        this.state={
-            text:""
+        this.state = {
+            text: "",
+            name: ""
         }
     }
-    render(){
-        console.log(this.props.CustomList,"this.propsthis.props")
-        return(
-            <div>
+
+    render() {
+        console.log(this.props.SecendChild, "this.props.CustomList")
+        return (
+            <div style={{border: "1px sold #0f0"}}>
+                <h2 style={{color: "#f0f"}}>这个是CustomList组价，产生当前的reducer</h2>
                 <div>
                     {this.props.CustomList.map((customItem, index) =>
                         <div key={index}>
-                            <span style={{color:"#f00",marginRight:"10px"}}>id:{customItem.id}</span>
+                            <span style={{color: "#f00", marginRight: "10px"}}>id:{customItem.id}</span>
                             <span>学号:{customItem.text}</span>
+                            <span>姓名:{customItem.name}</span>
                         </div>
                     )}
                 </div>
+                <span>学号</span>
                 <input
                     type="text"
                     value={this.state.text}
@@ -35,14 +41,24 @@ class CustomList extends Component{
                             text: e.target.value
                         });
                     }}/>
+                <span>姓名</span>
+                <input type="text"
+                       value={this.state.name}
+                       onChange={(e) => {  // 监听用户输入
+                           this.setState({
+                               name: e.target.value
+                           });
+                       }}/>
+
                 <button
                     onClick={() => {
-                        console.log('添加 click');
-                        // 发送添加习惯项Action
-                        this.props.dispatch(addCustomItemAction(this.state.text));
-                        // 把输入置为空
+                        console.log('触发add的action');
+                        // 发送添加的action
+                        this.props.dispatch(addCustomItemAction(this.state.text,this.state.name));
+                        //添加完 将输入框清空
                         this.setState({
-                            text: ''
+                            text: '',
+                            name: ''
                         });
                     }}>
                     添加
@@ -52,10 +68,11 @@ class CustomList extends Component{
                     onClick={() => {
                         console.log('删除 click');
                         // 发送添加习惯项Action
-                        this.props.dispatch(deleteCustomItemAction(this.state.text));
+                        this.props.dispatch(deleteCustomItemAction(this.state.card));
                         // 把输入置为空
                         this.setState({
-                            text: ''
+                            text: '',
+                            card:''
                         });
                     }}>
                     删除
@@ -64,16 +81,17 @@ class CustomList extends Component{
         )
     }
 }
+
 // 关联习惯列表的props与state，不关联的话全局的state.customList就没法作为props属性传进来
-const mapStateForProps =(state)=>{
-    return{
-        CustomList:state.CustomList
+const mapStateToProps = (state) => {
+    console.log(state,"adada")
+    return {
+        CustomList: state.CustomList,
+        SecendChild:state.SecendChild
     }
 }
-// 这个方法是用来绑定dispatch的，这里直接在组件里调用dispatch了，所以就没有用到这个方法
-// const mapDispatchToProps = {};
 
 // 使用connect函数包裹组件，从而获得store上下文，可以在组件里使用this.props.dispatch访问到dispatch方法
-CustomList =connect(mapStateForProps)(CustomList)
+CustomList = connect(mapStateToProps)(CustomList)
 //暴露组件 CustomList
 export default CustomList
