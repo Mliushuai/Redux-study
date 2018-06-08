@@ -9,7 +9,7 @@
       * customList
       * SecendChild
     * App.js  
-  * ReducerGather 
+  * ReducerGather --Reducer 所储存的内容
     * reducer
       * actions.js
       * CustomListReducer.js
